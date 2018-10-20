@@ -4,8 +4,9 @@
   "description": "A simple Blockstack app using ReactJS",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server",
-    "build": "webpack -p"
+    "start dev": "webpack-dev-server",
+    "start": "webpack && mv public/build/* public && rmdir public/build",
+    "build": "webpack && mv public/build/* public && rmdir public/build"
   },
   "repository": {
     "type": "git",
