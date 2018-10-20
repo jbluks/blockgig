@@ -3,7 +3,12 @@ import {
   isSignInPending,
   loadUserData,
   Person,
+  getFile,
+  putFile,
+  lookupProfile
 } from 'blockstack';
+
+const businessFileName = 'business.json'
 
 const avatarFallbackImage = 'https://s3.amazonaws.com/onename/avatar-placeholder.png';
 
@@ -19,7 +24,8 @@ export default class Profile extends Component {
   	  	avatarUrl() {
   	  	  return avatarFallbackImage;
   	  	},
-  	  },
+      },
+      business: {}
   	};
   }
 
