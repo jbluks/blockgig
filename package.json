@@ -4,7 +4,7 @@
   "description": "A simple Blockstack app using ReactJS",
   "main": "index.js",
   "scripts": {
-    "start dev": "webpack-dev-server",
+    "dev": "webpack-dev-server",
     "start": "node server.js",
     "build": "webpack"
   },
@@ -37,6 +37,7 @@
   "dependencies": {
     "blockstack": "^0.15.0",
     "bootstrap": "^3.3.7",
+    "cors": "^2.8.4",
     "express": "^4.16.4",
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
