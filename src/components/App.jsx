@@ -1,48 +1,55 @@
-import React, { Component, Link } from 'react';
-import Profile from './Profile.jsx';
-import Signin from './Signin.jsx';
+import React, { Component } from 'react'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import Profile from './Profile.jsx'
+import UserProfile from '../screens/UserProfile.jsx'
+import Signin from './Signin.jsx'
 import {
   isSignInPending,
   isUserSignedIn,
   redirectToSignIn,
   handlePendingSignIn,
-  signUserOut,
-} from 'blockstack';
+  signUserOut
+} from 'blockstack'
+import Dashboard from '../screens/Dashboard.jsx'
+import Header from './Header.jsx'
+import MarketPlace from '../screens/MarketPlace.jsx'
 
 export default class App extends Component {
-
-  constructor(props) {
-  	super(props);
+  constructor (props) {
+    super(props)
   }
 
-  handleSignIn(e) {
-    e.preventDefault();
-    redirectToSignIn();
+  handleSignIn (e) {
+    e.preventDefault()
+    redirectToSignIn()
   }
 
-  handleSignOut(e) {
-    e.preventDefault();
-    signUserOut(window.location.origin);
+  handleSignOut (e) {
+    e.preventDefault()
+    signUserOut(window.location.origin)
   }
 
-  render() {
+  render () {
     return (
-      <div className="site-wrapper">
-        <div className="site-wrapper-inner">
-          { !isUserSignedIn() ?
-            <Signin handleSignIn={ this.handleSignIn } />
-            : <Profile handleSignOut={ this.handleSignOut } />
-          }
+      <Router>
+        <div className='site-wrapper'>
+          <div className='site-wrapper-inner'>
+            <Header />
+            <Switch>
+              <Route path="/market" component={MarketPlace} />
+              <Route path="/profile" component={UserProfile} />
+            </Switch>
+          </div>
         </div>
-      </div>
-    );
+      </Router>
+    )
   }
 
-  componentWillMount() {
+  componentWillMount () {
     if (isSignInPending()) {
-      handlePendingSignIn().then((userData) => {
-        window.location = window.location.origin;
-      });
+      handlePendingSignIn().then(userData => {
+        window.location = window.location.origin
+      })
     }
   }
 }

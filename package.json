@@ -35,11 +35,13 @@
     "webpack-dev-server": "^2.4.2"
   },
   "dependencies": {
-    "blockstack": "^0.15.0",
+    "blockstack": "^18.0.4",
     "bootstrap": "^3.3.7",
     "cors": "^2.8.4",
     "express": "^4.16.4",
     "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "react-dom": "^15.5.4",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1"
   }
 }
