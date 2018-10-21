@@ -4,7 +4,7 @@ import { Rating } from 'semantic-ui-react'
 import JobProfile from '../components/JobProfile.jsx'
 
 
-const marketBaseUrl = 'https://blockgig.herokuapp.com/'
+const marketBaseUrl = 'https://blockgig.herokuapp.com'
 
 class MarketPlace extends Component {
   constructor(props) {
