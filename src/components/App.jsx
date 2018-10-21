@@ -11,8 +11,8 @@ import {
   handlePendingSignIn,
   signUserOut
 } from 'blockstack'
-import Dashboard from '../screens/Dashboard.jsx'
 import Header from './Header.jsx'
+import About from '../screens/About.jsx'
 import MarketPlace from '../screens/MarketPlace.jsx'
 
 export default class App extends Component {
@@ -35,7 +35,7 @@ export default class App extends Component {
       <Router>
         <div className='site-wrapper'>
           <div className='site-wrapper-inner'>
-            <Nav handleSignOut={this.handleSignOut}/>
+            <Nav handleSignOut={this.handleSignOut} handleSignIn={this.handleSignIn}/>
             <div className='header'>
               <Header
                 handleSignIn={this.handleSignIn}
@@ -46,10 +46,9 @@ export default class App extends Component {
               />
             </div>
             <Switch>
-
               <Route path='/marketplace' component={MarketPlace} />
               <Route path='/profile' component={UserProfile} />
-
+              <Route path='/about' component={About} />
             </Switch>
           </div>
         </div>

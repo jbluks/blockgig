@@ -22,6 +22,10 @@ class UserProfile extends Component {
     this.saveBusiness = this.saveBusiness.bind(this)
   }
 
+  componentDidMount() {
+    this.fetchData()
+  }
+
   fetchData() {
     this.setState({ isLoading: true })
     if (this.isLocal()) {
@@ -29,8 +33,10 @@ class UserProfile extends Component {
       getFile(businessFileName, options)
         .then((file) => {
           var business = JSON.parse(file || '{}')
+          const person = new Person(loadUserData().profile)
+          console.log(person)
           this.setState({
-            person: new Person(loadUserData().profile),
+            person,
             username: loadUserData().username,
             business
           })
@@ -42,6 +48,7 @@ class UserProfile extends Component {
       const username = this.props.match.params.username
       lookupProfile(username)
         .then((profile) => {
+          console.log(profile)
           this.setState({
             person: new Person(profile),
             username: username
@@ -86,6 +93,7 @@ class UserProfile extends Component {
     e.preventDefault()
 
     const business = {
+      username: loadUserData().username || this.props.match.params.username,
       name: this.business.businessName.value,
       skills: this.business.skills.value.split(',')
     }

@@ -5,7 +5,6 @@ import {
 } from 'semantic-ui-react'
 import {
   isUserSignedIn,
-
 } from 'blockstack'
 
 
@@ -37,7 +36,6 @@ export default class Nav extends Component {
           <Menu.Item style={styles.paddingElim} position='left'
             name='home'
             active={activeItem === 'home'}
-            onClick={this.handleItemClick}
             as={Link} to='/'
           >
             
@@ -50,39 +48,46 @@ export default class Nav extends Component {
             <Menu.Item
               name='marketplace'
               active={activeItem === 'marketplace'}
-              onClick={this.handleItemClick}
               as={Link} to='/marketplace'
             >
               <Header as="h3" style={styles.vertCenter}><strong>Marketplace</strong></Header>
         </Menu.Item>
 
+        {isUserSignedIn() &&
             <Menu.Item
               name='profile'
               active={activeItem === 'profile'}
-              onClick={this.handleItemClick}
               as={Link} to='/profile'
             >
               <Header as="h3" style={styles.vertCenter}><strong>Profile</strong></Header>
         </Menu.Item>
+        }
 
             <Menu.Item
               name='about'
               active={activeItem === 'about'}
-              onClick={this.handleItemClick}
               as={Link} to='/about'
             >
               <Header as="h3" style={styles.vertCenter}><strong>About</strong></Header>
         </Menu.Item>
-            
-            {isUserSignedIn() && 
+            {isUserSignedIn() ?
             <Menu.Item
               name='signout'
               active={activeItem === 'about'}
               onClick={this.props.handleSignOut}
-              as={Link} to='/about'
+              as={Link} to='/'
             >
               <Header as="h3" style={styles.vertCenter}><strong>Signout</strong></Header>
             </Menu.Item>
+            :
+            <Menu.Item
+            name='signin'
+            active={activeItem === 'about'}
+            onClick={this.props.handleSignIn}
+            as={Link} to='/profile'
+          >
+            <Header as="h3" style={styles.vertCenter}><strong>Login</strong></Header>
+          </Menu.Item>
             }
 
           </Menu.Menu>
