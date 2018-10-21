@@ -35,8 +35,6 @@ class UserProfile extends Component {
       skills: this.business.skills.value.split(',')
     }
 
-    console.log(business)
-
     const options = { encrypt: false }
     putFile(businessFileName, JSON.stringify(business), options)
       .then(() => {
