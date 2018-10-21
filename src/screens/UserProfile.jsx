@@ -11,84 +11,7 @@ import {
   lookupProfile
 } from 'blockstack'
 
-const businessFileName = 'business.json'
-const apiUrl = `http://localhost:8081/market`
 class UserProfile extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      business: {}
-    }
-    this.saveBusiness = this.saveBusiness.bind(this)
-  }
-
-  componentDidMount() {
-    this.fetchData()
-  }
-
-  fetchData() {
-    this.setState({ isLoading: true })
-    if (this.isLocal()) {
-      const options = { decrypt: false }
-      getFile(businessFileName, options)
-        .then((file) => {
-          var business = JSON.parse(file || '{}')
-          const person = new Person(loadUserData().profile)
-          console.log(person)
-          this.setState({
-            person,
-            username: loadUserData().username,
-            business
-          })
-        })
-        .finally(() => {
-          this.setState({ isLoading: false })
-        })
-    } else {
-      const username = this.props.match.params.username
-      lookupProfile(username)
-        .then((profile) => {
-          console.log(profile)
-          this.setState({
-            person: new Person(profile),
-            username: username
-          })
-        })
-        .catch((error) => {
-          console.log('could not resolve profile')
-        })
-
-      const options = { username: username, decrypt: false }
-      getFile(businessFileName, options)
-        .then((file) => {
-          var business = JSON.parse(file || '{}')
-          this.setState({
-            business
-          })
-        })
-        .catch((error) => {
-          console.log('could not fetch business')
-        })
-        .finally(() => {
-          this.setState({ isLoading: false })
-        })
-
-    }
-  }
-
-  isLocal() {
-    return this.props.match.params.username ? false : true
-  }
-
-
-  saveData(business) {
-    axios.post(apiUrl, {
-      business
-    }).then(err => {
-      //Error
-    })
-  }
-
   saveBusiness(e) {
     e.preventDefault()
 
@@ -98,17 +21,11 @@ class UserProfile extends Component {
       skills: this.business.skills.value.split(',')
     }
 
-    const options = { encrypt: false }
-    putFile(businessFileName, JSON.stringify(business), options)
-      .then(() => {
-        this.setState({
-          business
-        }, () => {
-          this.saveData(business)
-        })
-      })
+    this.props.saveBusiness(business)
   }
   render() {
+    const { business } = this.props.business
+    console.log(business)
     return (
       <div>
         UserProfile

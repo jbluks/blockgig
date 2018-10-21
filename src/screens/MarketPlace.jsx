@@ -22,15 +22,26 @@ class MarketPlace extends Component {
     })
   }
 
+  hire(i) {
+    axios.post(`${marketBaseUrl}/hire`, {
+      username: this.props.username,
+      business: this.state.marketPlace[i].username
+    }).then(res => {
+      // Success
+    })
+  }
+
   render () {
     const { marketPlace } = this.state
+    const { username } = this.props
     return (
       <div>
-        {marketPlace.map((business, i )=> {
+        {marketPlace.filter(business => business.username !== username).map((business, i )=> {
           return (
             <div key={i}>
               <div>{ business.name }</div>
               <div>Skills: {business.skills.join(', ')}</div>
+              <a href="#" onClick={() => this.hire(i)}>Hire Me</a>
             </div>
           )
         })}
