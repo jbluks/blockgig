@@ -16,6 +16,7 @@ class UserProfile extends Component {
     this.state = {
       business: {}
     }
+    this.saveBusiness = this.saveBusiness.bind(this)
   }
 
   saveData(business) {
@@ -26,11 +27,15 @@ class UserProfile extends Component {
     })
   }
 
-  saveBusiness() {
-    let business = {}
+  saveBusiness(e) {
+    e.preventDefault()
 
-    // Create Business object from the form object of add business
+    const business = {
+      name: this.business.businessName.value,
+      skills: this.business.skills.value.split(',')
+    }
 
+    console.log(business)
 
     const options = { encrypt: false }
     putFile(businessFileName, JSON.stringify(business), options)
@@ -43,7 +48,18 @@ class UserProfile extends Component {
       })
   }
   render() {
-    return <div>UserProfile</div>
+    return (
+      <div>
+        UserProfile
+        <div>
+          <form ref={self => this.business = self} onSubmit={this.saveBusiness}>
+            Business Name: <input type="text" name="businessName" />
+            Skill: <input type="text" name="skills" />
+            <button>Add Business</button>
+          </form>
+        </div>
+      </div>
+    )
   }
 }
 
