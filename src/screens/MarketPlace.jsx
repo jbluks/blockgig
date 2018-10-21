@@ -41,7 +41,7 @@ class MarketPlace extends Component {
     const { marketPlace } = this.state
     const { username } = this.props
     return (
-      <Grid>
+      <Grid columns={4}>
         <Grid.Row>
           {marketPlace.map((business, i) => (
             <Grid.Column key={i}>
