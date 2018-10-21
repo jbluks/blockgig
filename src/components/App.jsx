@@ -24,7 +24,7 @@ import Home from '../screens/Home.jsx'
 const businessFileName = 'business.json'
 const avatarFallbackImage =
   'https://s3.amazonaws.com/onename/avatar-placeholder.png'
-const apiUrl = `https://blockgig.herokuapp.com//market`
+const apiUrl = `https://blockgig.herokuapp.com/market`
 
 export default class App extends Component {
   constructor (props) {
