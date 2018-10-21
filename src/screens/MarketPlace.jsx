@@ -36,7 +36,7 @@ class MarketPlace extends Component {
     const { username } = this.props
     return (
       <div>
-        {marketPlace.filter(business => business.username !== username).map((business, i )=> {
+        {marketPlace.map((business, i )=> {
           return (
             <div key={i}>
               <div>{ business.name }</div>

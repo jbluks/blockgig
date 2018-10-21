@@ -10,14 +10,14 @@ app.use(express.static('public/build'))
 app.use(bodyParser.json())
 
 const marketplaceFile = 'marketplace.json'
-const transactionFile = 'transactions.json'
+const transactionsFile = 'transactions.json'
 let marketPlace = []
 let transactions = []
 
 const marketData = fs.readFileSync(marketplaceFile, 'utf8')
 if(marketData) marketPlace = JSON.parse(marketData)
 
-const transactionData = fs.readFileSync(transactionFile, 'utf8')
+const transactionData = fs.readFileSync(transactionsFile, 'utf8')
 if(transactionData) transactions = JSON.parse(transactionData)
 
 app.get('/market', (req, res) => {
@@ -32,8 +32,8 @@ app.get('/market/search', (req, res) => {
 app.post('/market', (req, res) => {
   const { business } = req.body
   const username = business.username
+  business.skills = business.skills.split(',')
   const index = marketPlace.findIndex(business => business.username === username)
-  console.log(business, index)
   if(index >= 0) {
     marketPlace[index] = business
   } else {
@@ -52,21 +52,23 @@ app.post('/hire', (req, res) => {
     username,
     business
   })
-  console.log(transactions)
   fs.writeFile(marketplaceFile, JSON.stringify(marketPlace), err => {
     if(err) console.log(err)
   })
   res.json({ success: true })
 })
 
-app.get('/hire/:username', (req, res) => {
+app.get('/market/hire/:username', (req, res) => {
   const { username } = req.params
   // Get matching transactions for user
-  const customers = transactions.filter(business => business.username === username)
+  const userTransactions = transactions.filter(business => business.username === username)
   // remove transactions from the transaction queue
   transactions = transactions.filter(business => business.username !== username)
+  fs.writeFile(transactionsFile, JSON.stringify(transactions), err => {
+    if(err) console.log(err)
+  })
   res.json({
-    customers
+    transactions: userTransactions
   })
 })
 

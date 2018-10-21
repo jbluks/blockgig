@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import Profile from './Profile.jsx'
 import UserProfile from '../screens/UserProfile.jsx'
-import Signin from './Signin.jsx'
 import Nav from './Nav.jsx'
 import axios from 'axios'
 import {
@@ -40,6 +39,7 @@ export default class App extends Component {
       },
       username: '',
       business: {},
+      transactions: [],
       isLoading: false
     }
     this.saveBusiness = this.saveBusiness.bind(this)
@@ -57,16 +57,27 @@ export default class App extends Component {
       .then(file => {
         var business = JSON.parse(file || '{}')
         const person = new Person(loadUserData().profile)
-        console.log(loadUserData().username)
-        this.setState({
-          person,
-          username: loadUserData().username,
-          business
-        })
+        this.setState(
+          {
+            person,
+            username: loadUserData().username,
+            business
+          },
+          () => {
+            if (this.state.business != {}) {
+              axios.get(`${apiUrl}/hire/${this.state.username}`).then(res => {
+                this.setState({
+                  transactions: res.data
+                })
+              })
+            }
+          }
+        )
       })
       .finally(() => {
         this.setState({ isLoading: false })
       })
+
     // } else {
     //   const username = this.props.match.params.username
     //   lookupProfile(username)
@@ -170,6 +181,7 @@ export default class App extends Component {
                   person={this.state.person}
                   username={this.state.user}
                   business={this.state.business}
+                  transactions={this.state.transactions}
                 />
               )}
             />
