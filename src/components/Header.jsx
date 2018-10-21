@@ -4,13 +4,14 @@ import { isUserSignedIn } from 'blockstack'
 
 class Header extends Component {
   render () {
+    const { handleSignIn, handleSignOut } = this.props
     return (
       <div>
         <div>BlockGig</div>
-        <div><Link to='/marketplace'>MarketPlace</Link></div>
+        <div><Link to='/market'>MarketPlace</Link></div>
         <div><Link to='/profile'>Profile</Link></div>
         <div>
-          {!isUserSignedIn() ? 'Login' : 'Logout'}
+          {!isUserSignedIn() ? <a href="#" onClick={handleSignIn}>Login</a> : <a href="#" onClick={handleSignOut}>Logout</a>}
         </div>
       </div>
     )

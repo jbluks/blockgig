@@ -34,10 +34,13 @@ export default class App extends Component {
       <Router>
         <div className='site-wrapper'>
           <div className='site-wrapper-inner'>
-            <Header />
+            <Header
+              handleSignIn={this.handleSignIn}
+              handleSignOut={this.handleSignOut}
+            />
             <Switch>
-              <Route path="/market" component={MarketPlace} />
-              <Route path="/profile" component={UserProfile} />
+              <Route path='/market' component={MarketPlace} />
+              <Route path='/profile' component={UserProfile} />
             </Switch>
           </div>
         </div>

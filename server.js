@@ -33,7 +33,10 @@ app.post('/market', (req, res) => {
   })
 })
 
-app.listen(port, ()=> console.log('BlockGig is Alive!'))
+app.listen(port, () => {
+  console.log(`BlockGig is alive at ${port}!`)
+  console.log(marketPlace)
+})
 
 function searchMarket(query) {
   return marketPlace.filter(business =>
