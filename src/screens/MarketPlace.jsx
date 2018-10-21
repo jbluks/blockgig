@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Rating } from 'semantic-ui-react'
+import { Grid } from 'semantic-ui-react'
 import JobProfile from '../components/JobProfile.jsx'
-
 
 const marketBaseUrl = 'https://blockgig.herokuapp.com'
 
 class MarketPlace extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       marketPlace: []
@@ -25,26 +24,32 @@ class MarketPlace extends Component {
     })
   }
 
-  hire(i) {
+  hire (i) {
     console.log('hire')
-    axios.post(`${marketBaseUrl}/hire`, {
-      username: this.props.username,
-      business: this.state.marketPlace[i].username
-    }).then(res => {
-      this.props.history.push('/hired')
-      // Success
-    })
+    axios
+      .post(`${marketBaseUrl}/hire`, {
+        username: this.props.username,
+        business: this.state.marketPlace[i].username
+      })
+      .then(res => {
+        this.props.history.push('/hired')
+        // Success
+      })
   }
 
   render () {
     const { marketPlace } = this.state
     const { username } = this.props
     return (
-      <div>
-        {marketPlace.map((business, i )=>
-            <JobProfile key={i} business={business} contact={() => this.hire(i)} />
-        )}
-      </div>
+      <Grid>
+        <Grid.Row>
+          {marketPlace.map((business, i) => (
+            <Grid.Column key={i}>
+              <JobProfile business={business} contact={() => this.hire(i)} />
+            </Grid.Column>
+          ))}
+        </Grid.Row>
+      </Grid>
     )
   }
 }
