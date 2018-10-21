@@ -39,7 +39,7 @@ export default class App extends Component {
               handleSignOut={this.handleSignOut}
             />
             <Switch>
-              <Route path='/market' component={MarketPlace} />
+              <Route path='/marketplace' component={MarketPlace} />
               <Route path='/profile' component={UserProfile} />
             </Switch>
           </div>

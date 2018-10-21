@@ -26,7 +26,7 @@ app.get('/market/search', (req, res) => {
 
 app.post('/market', (req, res) => {
   const { business } = req.body
-  marketPlace.push(JSON.parse(business))
+  marketPlace.push(business)
   res.json({ success: true})
   fs.writeFile(marketplaceFile, JSON.stringify(marketPlace), err => {
     if(err) console.log(err)
@@ -35,7 +35,6 @@ app.post('/market', (req, res) => {
 
 app.listen(port, () => {
   console.log(`BlockGig is alive at ${port}!`)
-  console.log(marketPlace)
 })
 
 function searchMarket(query) {
