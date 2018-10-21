@@ -40,7 +40,7 @@ class UserProfile extends Component {
     const { business, transactions } = this.props
     return (
       <div>
-      <h1>User Profile</h1>
+      <h1>Add Business</h1>
       <div className='businessSubmit'>
         <Form onSubmit={this.saveBusiness} >
 

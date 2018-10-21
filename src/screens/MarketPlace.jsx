@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { Rating } from 'semantic-ui-react'
+
 
 const marketBaseUrl = 'http://localhost:8081'
 
@@ -34,11 +36,13 @@ class MarketPlace extends Component {
   render () {
     const { marketPlace } = this.state
     const { username } = this.props
+    console.log(marketPlace)
     return (
       <div>
         {marketPlace.map((business, i )=> {
           return (
             <div key={i}>
+              <Rating icon='star' defaultRating={4} maxRating={5} />
               <div>{ business.name }</div>
               <div>Skills: {business.skills.join(', ')}</div>
               <a href="#" onClick={() => this.hire(i)}>Hire Me</a>

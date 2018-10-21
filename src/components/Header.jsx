@@ -11,7 +11,6 @@ import {
 
 class Header extends Component {
   render () {
-    
     const { handleSignIn, handleSignOut } = this.props
 
     return (
@@ -26,9 +25,6 @@ class Header extends Component {
                 routeProps => <Profile handleSignOut={this.props.handleSignOut} {...routeProps} />
               }
             />
-
-
-            
           }
         </div>
       </div>

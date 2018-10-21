@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
+import { Card, Icon, Grid, Container } from 'semantic-ui-react'
 import Profile from './Profile.jsx'
 import UserProfile from '../screens/UserProfile.jsx'
 import Nav from './Nav.jsx'
@@ -16,9 +17,9 @@ import {
   putFile,
   lookupProfile
 } from 'blockstack'
-import Header from './Header.jsx'
 import About from '../screens/About.jsx'
 import MarketPlace from '../screens/MarketPlace.jsx'
+import Home from '../screens/Home.jsx'
 
 const businessFileName = 'business.json'
 const avatarFallbackImage =
@@ -64,7 +65,7 @@ export default class App extends Component {
             business
           },
           () => {
-            if (this.state.business != {}) {
+            if (this.state.business !== {}) {
               axios.get(`${apiUrl}/hire/${this.state.username}`).then(res => {
                 this.setState({
                   transactions: res.data
@@ -148,7 +149,6 @@ export default class App extends Component {
   }
 
   render () {
-    console.log(this.state)
     return (
       <div className='site-wrapper'>
         <div className='site-wrapper-inner'>
@@ -156,37 +156,31 @@ export default class App extends Component {
             handleSignOut={this.handleSignOut}
             handleSignIn={this.handleSignIn}
           />
-          <div className='header'>
-            <Header
-              handleSignIn={this.handleSignIn}
-              handleSignOut={this.handleSignOut}
-              render={routeProps => (
-                <Profile handleSignOut={this.handleSignOut} {...routeProps} />
-              )}
-            />
-          </div>
-          <Switch>
-            <Route
-              path='/marketplace'
-              render={routeProps => (
-                <MarketPlace username={this.state.username} {...routeProps} />
-              )}
-            />
-            <Route
-              path='/profile'
-              render={routeProps => (
-                <UserProfile
-                  {...routeProps}
-                  saveBusiness={this.saveBusiness}
-                  person={this.state.person}
-                  username={this.state.user}
-                  business={this.state.business}
-                  transactions={this.state.transactions}
-                />
-              )}
-            />
-            <Route path='/about' component={About} />
-          </Switch>
+          <Container>
+            <Switch>
+              <Route path='/' exact component={Home} />
+              <Route
+                path='/marketplace'
+                render={routeProps => (
+                  <MarketPlace username={this.state.username} {...routeProps} />
+                )}
+              />
+              <Route
+                path='/profile'
+                render={routeProps => (
+                  <UserProfile
+                    {...routeProps}
+                    saveBusiness={this.saveBusiness}
+                    person={this.state.person}
+                    username={this.state.user}
+                    business={this.state.business}
+                    transactions={this.state.transactions}
+                  />
+                )}
+              />
+              <Route path='/about' component={About} />
+            </Switch>
+          </Container>
         </div>
       </div>
     )
