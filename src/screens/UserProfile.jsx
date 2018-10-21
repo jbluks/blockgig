@@ -97,7 +97,7 @@ class UserProfile extends Component {
                 ? <div>No New customers</div>
                 : <ul>
                   {transactions.map((transaction, i) => (
-                    <li key={i}>{transaction.username} {transaction.date}</li>
+                    <li key={i}><a href={`/${transaction.username}`}>{transaction.username}</a> {transaction.date}</li>
                     ))}
                 </ul>}
             </Grid.Column>
