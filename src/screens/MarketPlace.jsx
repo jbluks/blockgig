@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { Rating } from 'semantic-ui-react'
+import JobProfile from '../components/JobProfile.jsx'
 
 
-const marketBaseUrl = 'http://localhost:8081'
+const marketBaseUrl = 'https://blockgig.herokuapp.com/'
 
 class MarketPlace extends Component {
   constructor(props) {
@@ -25,10 +26,12 @@ class MarketPlace extends Component {
   }
 
   hire(i) {
+    console.log('hire')
     axios.post(`${marketBaseUrl}/hire`, {
       username: this.props.username,
       business: this.state.marketPlace[i].username
     }).then(res => {
+      this.props.history.push('/hired')
       // Success
     })
   }
@@ -36,19 +39,11 @@ class MarketPlace extends Component {
   render () {
     const { marketPlace } = this.state
     const { username } = this.props
-    console.log(marketPlace)
     return (
       <div>
-        {marketPlace.map((business, i )=> {
-          return (
-            <div key={i}>
-              <Rating icon='star' defaultRating={4} maxRating={5} />
-              <div>{ business.name }</div>
-              <div>Skills: {business.skills.join(', ')}</div>
-              <a href="#" onClick={() => this.hire(i)}>Hire Me</a>
-            </div>
-          )
-        })}
+        {marketPlace.map((business, i )=>
+            <JobProfile key={i} business={business} contact={() => this.hire(i)} />
+        )}
       </div>
     )
   }

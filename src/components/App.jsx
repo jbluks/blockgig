@@ -24,7 +24,7 @@ import Home from '../screens/Home.jsx'
 const businessFileName = 'business.json'
 const avatarFallbackImage =
   'https://s3.amazonaws.com/onename/avatar-placeholder.png'
-const apiUrl = `http://localhost:8081/market`
+const apiUrl = `https://blockgig.herokuapp.com//market`
 
 export default class App extends Component {
   constructor (props) {
@@ -44,10 +44,25 @@ export default class App extends Component {
       isLoading: false
     }
     this.saveBusiness = this.saveBusiness.bind(this)
+    this.handleBusinessDelete = this.handleBusinessDelete.bind(this)
   }
 
   componentDidMount () {
     this.fetchData()
+  }
+
+  handleBusinessDelete() {
+    console.log('fired')
+    console.log(this.state.business)
+    const business = Object.assign(this.state.business, {
+      businessName: null,
+      skills: null,
+      username: loadUserData().username || this.props.match.params.username,
+    })
+    this.setState({
+      business
+    })
+    console.log(this.state.business)
   }
 
   fetchData () {
@@ -149,6 +164,7 @@ export default class App extends Component {
   }
 
   render () {
+    console.log(this.state)
     return (
       <div className='site-wrapper'>
         <div className='site-wrapper-inner'>
@@ -172,12 +188,14 @@ export default class App extends Component {
                     {...routeProps}
                     saveBusiness={this.saveBusiness}
                     person={this.state.person}
-                    username={this.state.user}
+                    username={this.state.username}
                     business={this.state.business}
                     transactions={this.state.transactions}
+                    handleBusinessDelete={this.handleBusinessDelete}
                   />
                 )}
               />
+              <Route path='/hired' render={props => <div>Success! You will be contacted shortly!</div>} />
               <Route path='/about' component={About} />
             </Switch>
           </Container>
