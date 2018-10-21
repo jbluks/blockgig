@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import {
+  Menu, Header, Form, Container
+} from 'semantic-ui-react'
+import {
   loadUserData,
   Person,
   getFile,
@@ -51,8 +54,11 @@ class UserProfile extends Component {
         UserProfile
         <div>
           <form ref={self => this.business = self} onSubmit={this.saveBusiness}>
+          
             Business Name: <input type="text" name="businessName" />
-            Skill: <input type="text" name="skills" />
+          
+            Skill: <input type="text" name="skills" /> <br/>
+          
             <button>Add Business</button>
           </form>
         </div>

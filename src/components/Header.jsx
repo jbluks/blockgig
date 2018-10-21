@@ -1,19 +1,35 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import { isUserSignedIn } from 'blockstack'
+import { Link, Route } from 'react-router-dom'
+import Profile from './Profile.jsx';
+import Signin from './Signin.jsx';
+import {
+  isSignInPending,
+  isUserSignedIn, 
+  redirectToSignIn,
+  handlePendingSignIn,
+  signUserOut, } from 'blockstack'
 
 class Header extends Component {
   render () {
+    
     const { handleSignIn, handleSignOut } = this.props
+
     return (
       <div>
-        <div>BlockGig</div>
-        <div><Link to='/marketplace'>MarketPlace</Link></div>
-        <div><Link to='/profile'>Profile</Link></div>
+
         <div>
           {!isUserSignedIn()
-            ? <a href='#' onClick={handleSignIn}>Login</a>
-            : <a href='#' onClick={handleSignOut}>Logout</a>}
+            ? <Signin handleSignIn={this.props.handleSignIn}/>
+            : <Route
+              path='/:username?'
+              render={
+                routeProps => <Profile handleSignOut={this.props.handleSignOut} {...routeProps} />
+              }
+            />
+
+
+            
+          }
         </div>
       </div>
     )

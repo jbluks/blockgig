@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Profile from './Profile.jsx'
 import UserProfile from '../screens/UserProfile.jsx'
 import Signin from './Signin.jsx'
+import Nav from './Nav.jsx'
 import {
   isSignInPending,
   isUserSignedIn,
@@ -15,32 +16,40 @@ import Header from './Header.jsx'
 import MarketPlace from '../screens/MarketPlace.jsx'
 
 export default class App extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
   }
 
-  handleSignIn (e) {
+  handleSignIn(e) {
     e.preventDefault()
     redirectToSignIn()
   }
 
-  handleSignOut (e) {
+  handleSignOut(e) {
     e.preventDefault()
     signUserOut(window.location.origin)
   }
 
-  render () {
+  render() {
     return (
       <Router>
         <div className='site-wrapper'>
           <div className='site-wrapper-inner'>
-            <Header
-              handleSignIn={this.handleSignIn}
-              handleSignOut={this.handleSignOut}
-            />
+            <Nav handleSignOut={this.handleSignOut}/>
+            <div className='header'>
+              <Header
+                handleSignIn={this.handleSignIn}
+                handleSignOut={this.handleSignOut}
+                render = {
+                routeProps => <Profile handleSignOut={this.handleSignOut} {...routeProps} />
+              }
+              />
+            </div>
             <Switch>
+
               <Route path='/marketplace' component={MarketPlace} />
               <Route path='/profile' component={UserProfile} />
+
             </Switch>
           </div>
         </div>
@@ -48,7 +57,7 @@ export default class App extends Component {
     )
   }
 
-  componentWillMount () {
+  componentWillMount() {
     if (isSignInPending()) {
       handlePendingSignIn().then(userData => {
         window.location = window.location.origin
