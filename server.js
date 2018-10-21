@@ -77,6 +77,10 @@ app.get('/market/hire/:username', (req, res) => {
   res.json(userTransactions)
 })
 
+app.all('*', (req, res) => {
+  res.redirect('/')
+})
+
 app.listen(port, () => {
   console.log(`BlockGig is alive at ${port}!`)
   console.log(marketPlace)
