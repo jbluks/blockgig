@@ -22,6 +22,58 @@ class UserProfile extends Component {
     this.saveBusiness = this.saveBusiness.bind(this)
   }
 
+  fetchData() {
+    this.setState({ isLoading: true })
+    if (this.isLocal()) {
+      const options = { decrypt: false }
+      getFile(businessFileName, options)
+        .then((file) => {
+          var business = JSON.parse(file || '{}')
+          this.setState({
+            person: new Person(loadUserData().profile),
+            username: loadUserData().username,
+            business
+          })
+        })
+        .finally(() => {
+          this.setState({ isLoading: false })
+        })
+    } else {
+      const username = this.props.match.params.username
+      lookupProfile(username)
+        .then((profile) => {
+          this.setState({
+            person: new Person(profile),
+            username: username
+          })
+        })
+        .catch((error) => {
+          console.log('could not resolve profile')
+        })
+
+      const options = { username: username, decrypt: false }
+      getFile(businessFileName, options)
+        .then((file) => {
+          var business = JSON.parse(file || '{}')
+          this.setState({
+            business
+          })
+        })
+        .catch((error) => {
+          console.log('could not fetch business')
+        })
+        .finally(() => {
+          this.setState({ isLoading: false })
+        })
+
+    }
+  }
+
+  isLocal() {
+    return this.props.match.params.username ? false : true
+  }
+
+
   saveData(business) {
     axios.post(apiUrl, {
       business
