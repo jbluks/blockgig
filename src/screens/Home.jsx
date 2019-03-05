@@ -5,7 +5,8 @@ class Home extends Component {
   render () {
     return (
       <div>
-        <h1>BlockGig - A Cool Blockchain MarketPlace!</h1>
+        <h1>BlockGig - A Blockchain MarketPlace!</h1>
+        <h2>This is a work in progress.</h2>
         <Grid columns={3}>
           <Grid.Row>
             <Grid.Column>
